@@ -45,7 +45,7 @@ if(!isset($_SESSION["user_id"]))
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Add Class / Student</a>
+            <a class="navbar-brand" href="#pablo"></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -76,7 +76,12 @@ if(!isset($_SESSION["user_id"]))
                       </div>
                       <div class="form-group">
                         <label>Exam time (MINUTES)</label>
-                        <input type="text" class="form-control" id = "time" name="time" placeholder="Exam time"/>
+                        <input type="number"
+                          min="1"
+                          step="1"
+                          onfocus="this.previousValue = this.value"
+                          onkeydown="this.previousValue = this.value"
+                          oninput="validity.valid || (value = this.previousValue)" class="form-control" id = "time" name="time" placeholder="Exam time"/>
                       </div>
                       <div class="form-group">
                         <label>Course</label>

@@ -154,7 +154,7 @@ if(!isset($_SESSION["user_id"]))
                             <tr id = "init<?= $row["id"]; ?>">
                               <input type="hidden" id="question_id" value="<?= $row["id"]; ?>">
                               <td><?= $i;?></td>
-                              <td><?= $row["title"];?></td>
+                              <td data-toggle="modal" data-target="#questionModal<?=$row["id"];?>"><?= $row["title"];?></td>
                               <td><?= $row["level"];?></td>
                               <td><button id="add" name="add" class="btn btn-primary btn-round" onclick="add_question('<?= $row["id"]; ?>')">ADD</button></td>
                             </tr>
@@ -170,6 +170,36 @@ if(!isset($_SESSION["user_id"]))
             </div>
           </div>
         </div>
+        <?php     
+        $sql = "select * from questions where course_id = $id_course and teacher_id = $user_id";
+        $result = mysqli_query($conn,$sql);
+        
+        while($row = mysqli_fetch_assoc($result)) {
+        ?>             
+        <div class="modal fade" id="questionModal<?= $row["id"];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Question</h5>
+              </div>
+              <div class="modal-body">
+                <h5><?= $row["title"];?></h5>
+                <p>Option A: <?= $row["optionA"];?></p>
+                <p>Option B: <?= $row["optionB"];?></p>
+                <p>Option C: <?= $row["optionC"];?></p>
+                <p>Option D: <?= $row["optionD"];?></p>
+                <p>Correct Answer: <?= $row["correctAns"];?></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+          </div>
+        </div>
+      <?php
+        
+        }
+      ?>
       </div>
   </div>
   <!--   Core JS Files   -->

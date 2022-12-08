@@ -1,7 +1,14 @@
 <?php
+
 session_start();
 if(!isset($_SESSION["user_id"]))
   header("Location:../index.php");
+
+if(isset($_SESSION["insert_error"])){
+  echo "<script> alert('Duplicate course, cannot insert'); </script>";
+  unset($_SESSION["insert_error"]);
+}
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,14 +89,17 @@ if(!isset($_SESSION["user_id"]))
                     if(mysqli_num_rows($result) > 0) {
                       while($row = mysqli_fetch_assoc($result)) {
                         ?>
-                          <div class="card" style="background:#ededed;">
-                              <div class="card-body" onclick="submit(<?= $row['id'];?>)">
-                                <h6><?= $row["course_name"];?></h6>
-                                <div class="row">
+                          <div id="<?= $row["id"]; ?>" class="card" style="background:#ededed;">
+                              <div class="card-body" >
+                              <div >
+                                <h6 onclick="submit(<?= $row['id'];?>)"><?= $row["course_name"];?></h6>
+                                <div class="row" style="display: flex; justify-content: space-between; align-items: center">
                                   <div class="col-md-8">
                                     <p>CourseID - <?= $row["course_id"];?></p>
                                   </div>
+                                  <button class="btn btn-primary btn-block btn-round" style="margin:0px;width:100px !important;" onclick="delete_course('<?= $row["id"]; ?>')">DELETE</button>
                                 </div>
+                              </div>
                               </div>
                           </div>
                         <?php
@@ -140,5 +150,19 @@ if(!isset($_SESSION["user_id"]))
     document.getElementById("id_course").value = val1;
     document.getElementById("course_details").submit();
   }
+
+  function delete_course(id_course) {
+      var target = document.getElementById(id_course);
+      target.style.display = 'none';
+      $.ajax({
+          type: 'POST',
+          url: 'delete_course.php',
+          data: {
+            'id_course': id_course,
+          },
+          success: function (response) {
+          }
+      });
+    }
 </script>
 </html>

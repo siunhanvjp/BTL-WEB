@@ -160,7 +160,6 @@ if(!isset($_SESSION["user_id"]))
                             <th>Question</th>
                             <th>Level</th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -173,9 +172,8 @@ if(!isset($_SESSION["user_id"]))
                             <tr id = "<?= $row["id"]; ?>">
                               <input type="hidden" id="question_id" value="<?= $row["id"]; ?>">
                               <td><?= $i;?></td>
-                              <td><?= $row["title"];?></td>
+                              <td data-toggle="modal" data-target="#questionModal<?=$row["id"];?>"><?= $row["title"];?></td>
                               <td><?= $row["level"];?></td>
-                              <td><button>EDIT</button></td>
                               <td><button id="delete" name="delete" class="btn btn-primary btn-block btn-round" onclick="delete_question('<?= $row["id"]; ?>','<?php echo $id_course; ?>')">DELETE</button></td>
                             </tr>
 
@@ -218,7 +216,36 @@ if(!isset($_SESSION["user_id"]))
         </form>
         </div>
       </div>
-
+      <?php     
+        $sql = "select * from questions where course_id = $id_course and teacher_id = $user_id";
+        $result = mysqli_query($conn,$sql);
+        
+        while($row = mysqli_fetch_assoc($result)) {
+        ?>             
+        <div class="modal fade" id="questionModal<?= $row["id"];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Question</h5>
+              </div>
+              <div class="modal-body">
+                <h5><?= $row["title"];?></h5>
+                <p>Option A: <?= $row["optionA"];?></p>
+                <p>Option B: <?= $row["optionB"];?></p>
+                <p>Option C: <?= $row["optionC"];?></p>
+                <p>Option D: <?= $row["optionD"];?></p>
+                <p>Correct Answer: <?= $row["correctAns"];?></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+          </div>
+        </div>
+      <?php
+        
+        }
+      ?>
 
       <!-- footer -->
       
@@ -241,7 +268,28 @@ if(!isset($_SESSION["user_id"]))
     }
 
     $(document).ready(function() {
-        $('#example').DataTable();
+      $('#example').DataTable({
+            "columns": [
+                { "width": "5%" },
+                { "width": "80%" },
+                { "width": "5%" },
+                { "width": "10%" }
+            ],
+            'columnDefs': [
+                {
+                        "targets": 3, // your case first column
+                        "className": "text-center",
+                },
+                {
+                        "targets": 0,
+                        "className": "text-center",
+                },
+                {
+                        "targets": 2,
+                        "className": "text-center",
+                }
+            ]
+        });
     });
 
     function completed() {

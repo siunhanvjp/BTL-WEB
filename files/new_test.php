@@ -7,13 +7,20 @@ include '../database/config.php';
 if(isset($_POST['new_course'])) {
   $course_id = $_POST['course_id'];
   $course_name = $_POST['course_name'];
-
   $teacher_id = $_SESSION["user_id"];
   //creating new course
-  $sql = "INSERT INTO course(course_id, course_name, teacher_id) VALUES('$course_id','$course_name','$teacher_id')";
+  $sql = "SELECT * FROM course WHERE teacher_id = '$teacher_id' and course_name = '$course_name' and course_id = '$course_id'";
   $result = mysqli_query($conn,$sql);
-  $course_id = mysqli_insert_id($conn);
 
+  if(mysqli_num_rows($result) > 0) {
+    $_SESSION["insert_error"] = "Duplicate course";
+  } else {
+    $sql = "INSERT INTO course(course_id, course_name, teacher_id) VALUES('$course_id','$course_name','$teacher_id')";
+    $result = mysqli_query($conn,$sql);
+    $course_id = mysqli_insert_id($conn);
+  }
+
+  header("Location: dashboard.php");
 }
 ?>
 <!DOCTYPE html>
@@ -88,11 +95,11 @@ if(isset($_POST['new_course'])) {
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Course ID</label>
-                          <input type="text" class="form-control" name="course_id" placeholder="Course ID" required/>
+                          <input required pattern="\S(.*\S)?" title="no whitespace or tab "type="text" class="form-control" name="course_id" placeholder="Course ID" required/>
                       </div>
                       <div class="form-group">
                         <label>Course Name</label>
-                          <input type="text" class="form-control" name="course_name" placeholder="Course Name" required/>
+                          <input required pattern="\S(.*\S)?" title="no whitespace or tab " type="text" class="form-control" name="course_name" placeholder="Course Name" required/>
                       </div>
                     </div>
                   </div>

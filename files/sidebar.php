@@ -13,7 +13,7 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
         <li class="<?=($activePage=='dashboard' || $activePage=='new_test' || $activePage=='test_details' || $activePage=='add_question' || $activePage=='student_test_credentials')? 'active': ''; ?>">
           <a href="./dashboard.php">
             <i class="now-ui-icons shopping_shop"></i>
-            <p>Question bank</p>
+            <p>Courses</p>
           </a>
         </li>
         <li class="<?=($activePage=='add_data')? 'active': ''; ?>">
