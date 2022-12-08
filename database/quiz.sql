@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Dec 07, 2022 at 08:27 AM
+-- Generation Time: Dec 08, 2022 at 05:11 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `course`
 --
 
@@ -39,8 +51,7 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `course_id`, `course_name`, `teacher_id`) VALUES
-(5, 'KHMT2002', 'KHOA HOC1', 1),
-(7, 'KHMT200', 'DATABASE', 1);
+(7, 'KHMT200', 'DATABASEq', 1);
 
 -- --------------------------------------------------------
 
@@ -66,28 +77,22 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `title`, `optionA`, `optionB`, `optionC`, `optionD`, `correctAns`, `level`, `teacher_id`, `course_id`) VALUES
-(12, 'a', 'a', 'a', 'a', 'a', 'a', 1, 1, 5);
+(33, 'TITLE2', 'opt 1', 'opt2', 'opt3', 'opt4', 'b', 5, 1, 7),
+(34, 'TITLE3', 'opt 1', 'opt2', 'opt3', 'opt4', 'c', 5, 1, 7),
+(35, 'TITLE4', 'opt 1', 'opt2', 'opt3', 'opt4', 'd', 5, 1, 7),
+(36, 'TITLE5', 'opt 1', 'opt2', 'opt3', 'opt4', 'a', 5, 1, 7),
+(37, 'TITLE1', 'opt 1', 'opt2', 'opt3', 'opt4', 'a', 5, 1, 7),
+(38, 'TITLE2', 'opt 1', 'opt2', 'opt3', 'opt4', 'b', 5, 1, 7),
+(39, 'TITLE3', 'opt 1', 'opt2', 'opt3', 'opt4', 'c', 5, 1, 7),
+(40, 'TITLE4', 'opt 1', 'opt2', 'opt3', 'opt4', 'd', 5, 1, 7),
+(41, 'TITLE5', 'opt 1', 'opt2', 'opt3', 'opt4', 'a', 5, 1, 7),
+(42, 'TITLE1', 'opt 1', 'opt2', 'opt3', 'opt4', 'a', 5, 1, 7),
+(43, 'TITLE2', 'opt 1', 'opt2', 'opt3', 'opt4', 'b', 5, 1, 7),
+(44, 'TITLE3', 'opt 1', 'opt2', 'opt3', 'opt4', 'c', 5, 1, 7),
+(45, 'TITLE4', 'opt 1', 'opt2', 'opt3', 'opt4', 'd', 5, 1, 7),
+(46, 'TITLE5', 'opt 1', 'opt2', 'opt3', 'opt4', 'a', 5, 1, 7);
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `id` int (11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Insert data to table `admin`
---
-
-INSERT INTO `admin` (`id`, `username`, `password`) VALUES
-(1, 'admin', 'SecretPassword');
-
--- ----------------------------------------------
 
 --
 -- Table structure for table `teacher`
@@ -96,7 +101,7 @@ INSERT INTO `admin` (`id`, `username`, `password`) VALUES
 CREATE TABLE `teacher` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -110,7 +115,11 @@ INSERT INTO `teacher` (`id`, `username`, `password`) VALUES
 -- Indexes for dumped tables
 --
 
-
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `course`
@@ -119,18 +128,12 @@ ALTER TABLE `course`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `questions`
 --
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `belong_to` (`teacher_id`),
-  ADD KEY `question_course` (`course_id`);
+  ADD KEY `teacher_question` (`teacher_id`),
+  ADD KEY `course_question` (`course_id`);
 
 --
 -- Indexes for table `teacher`
@@ -144,16 +147,22 @@ ALTER TABLE `teacher`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `teacher`
@@ -170,6 +179,13 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `course`
   ADD CONSTRAINT `course_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `questions`
+--
+ALTER TABLE `questions`
+  ADD CONSTRAINT `course_question` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `teacher_question` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
