@@ -1,6 +1,7 @@
 <?php
-	if(isset($_SESSION['test_ongoing']))
-		header("Location: files/quiz.php");
+session_start();
+if(isset($_SESSION["user_id"]))
+  header("Location:./files/dashboard.php");
 ?>
 
 <html>
@@ -66,54 +67,46 @@
 							<img src="images/img-01.png" alt="IMG">
 						</div>
 						<div class="login100-form validate-form">
-						<span class="login100-form-title">
-							Student Login
-						</span>
-						
-						<div class="wrap-input100 validate-input">
-							<input class="input100" id="studentRollNumber" type="text" name="rollNumber"
-								placeholder="Roll Number" required>
-							<span class="focus-input100"></span>
-							<span class="symbol-input100">
-								<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+							<span class="login100-form-title">
+								Teacher Login
 							</span>
-							<span class="error text-danger" id="empty_roll_number_field"></span>
-						</div>
+							
+							<div class="wrap-input100 validate-input">
+								<input class="input100" id="username" type="text" name="username"
+									placeholder="Username" required>
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+								</span>
+								<span class="error text-danger" id="empty_username"></span>
+							</div>
 
-						<div class="wrap-input100 validate-input">
-							<input class="input100" id="studentPassword" type="password" name="password"
-								placeholder="Password" required>
-							<span class="focus-input100"></span>
-							<span class="symbol-input100">
-								<i class="fa fa-lock" aria-hidden="true"></i>
-							</span>
-							<span class="error text-danger" id="empty_roll_password_field"></span>
-						</div>
+							<div class="wrap-input100 validate-input">
+								<input class="input100" id="password" type="password" name="password"
+									placeholder="Password" required>
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-lock" aria-hidden="true"></i>
+								</span>
+								<span class="error text-danger" id="empty_password"></span>
+							</div>
 
-						<div class="container-login100-form-btn">
-							<button class="login100-form-btn" onclick="login()">
-								Login
-							</button>
-						</div>
+							<div class="container-login100-form-btn">
+								<button class="login100-form-btn" onclick="login()">
+									Login
+								</button>
+							</div>
 
-						<div class="text-center p-t-136">
+							<div class="text-center p-t-136" id="result">
+
+							</div>
 						</div>
-</div>
 					</div>
 				</div>
 			</div>
 		</section>
+
 		<script>
-			$(document).ready(function () {
-
-				if (Cookies.get('last_question_was_answered') != undefined) {
-					Cookies.remove('last_question_was_answered');
-					Cookies.remove('last_question');
-				}
-				if (Cookies.get('test_submitted_status') != undefined)
-					Cookies.remove('test_submitted_status');	
-			});
-
 
 			$('.js-tilt').tilt({
 				scale: 1.1
@@ -122,28 +115,33 @@
 			function login() {
 				var someFieldIsEmpty = false;
 
-				if (!$('#studentRollNumber').val()) {
+				if (!$('#username').val()) {
 					someFieldIsEmpty = true;
-					$('#empty_roll_number_field').val("Please enter your roll number");
+					$('#empty_username').val("Please enter your username");
 				}
-				if (!$('#studentPassword').val()) {
+				if (!$('#password').val()) {
 					someFieldIsEmpty = true;
-					$('#empty_roll_passsword_field').val("Please enter your password");
+					$('#empty_password').val("Please enter your password");
 				}
 
 				if (!someFieldIsEmpty) {
 					$.ajax({
 						type: 'POST',
-						url: 'files/student_login.php',
+						url: 'files/checklogin.php',
 						data: {
-							'rollNumber': $('#studentRollNumber').val(),
-							'password': $('#studentPassword').val(),
+							'username': $('#username').val(),
+							'password': $('#password').val(),
 						},
 						success: function (response) {
-							if(response == "STUDENT_RECORD_NOT_FOUND")
-								alert("Wrong Credentails entered");
-							else
-								window.location.replace("files/dashboard.php");
+							if(response != "success"){
+								$("#result").html("Login Failed");
+							}
+							else{
+								$("#result").html("Login Successful");
+								setTimeout(function(){
+									window.location="files/dashboard.php";
+								},1200);
+							}	
 						}
 					});
 				}
