@@ -113,7 +113,7 @@ if(!isset($_SESSION["user_id"]))
   }
 
   function log_out() {
-    window.location.replace("logout.php");
+    window.location.replace("admin_logout.php");
   }
 
 </script>
