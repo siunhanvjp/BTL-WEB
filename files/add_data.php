@@ -45,7 +45,6 @@ if(!isset($_SESSION["user_id"]))
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo"></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -59,7 +58,7 @@ if(!isset($_SESSION["user_id"]))
       <div class="panel-header panel-header-sm">
       </div>
       <div class="content" style="min-height: auto;">
-        <div class="row">
+        <div class="row mx-auto align-items-center justify-content-center">
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
