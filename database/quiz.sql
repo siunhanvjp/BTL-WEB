@@ -71,6 +71,25 @@ INSERT INTO `questions` (`id`, `title`, `optionA`, `optionB`, `optionC`, `option
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int (11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Insert data to table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password`) VALUES
+(1, 'admin', 'SecretPassword');
+
+-- ----------------------------------------------
+
+--
 -- Table structure for table `teacher`
 --
 
@@ -91,10 +110,18 @@ INSERT INTO `teacher` (`id`, `username`, `password`) VALUES
 -- Indexes for dumped tables
 --
 
+
+
 --
 -- Indexes for table `course`
 --
 ALTER TABLE `course`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
