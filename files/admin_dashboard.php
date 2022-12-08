@@ -46,7 +46,7 @@ if(!isset($_SESSION["user_id"]))
                   <div class="col-md-4">
                     <button class="btn btn-primary btn-block btn-round" onclick="redirect_to_register()" style="margin-top:0px;width:100px !important;float:right !important;">NEW</button>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-12">
                     <button class="btn btn-primary btn-block btn-round" onclick="log_out()" style="margin-top:0px;width:100px !important;float:right !important;">LOG OUT</button>
                   </div>
                 </div>  

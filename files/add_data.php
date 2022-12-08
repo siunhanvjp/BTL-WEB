@@ -59,7 +59,7 @@ if(!isset($_SESSION["user_id"]))
       <div class="panel-header panel-header-sm">
       </div>
       <div class="content" style="min-height: auto;">
-        <div class="row">
+        <div class="row mx-auto align-items-center justify-content-center">
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
