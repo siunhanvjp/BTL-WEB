@@ -59,6 +59,7 @@ if(!isset($_SESSION["user_id"]))
         $op_d = $_POST['op_d'];
         $op_correct = $_POST['op_correct'];
         $level = $_POST['level'];
+        $title = str_replace( array( '\'', '"', ',' , ';', '<', '>' ), ' ', $title);
 
         $op_correct_text = "";
 

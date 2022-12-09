@@ -40,26 +40,36 @@
                 $title = "";
                 if(isset($Row[0])) {
                     $title = mysqli_real_escape_string($conn,$Row[0]);
+                    
+
                 }
                 
                 $op_a = "";
                 if(isset($Row[1])) {
                     $op_a = mysqli_real_escape_string($conn,$Row[1]);
+                    
+
                 }
 
                 $op_b = "";
                 if(isset($Row[2])) {
                     $op_b = mysqli_real_escape_string($conn,$Row[2]);
+                   
+
                 }
 
                 $op_c = "";
                 if(isset($Row[3])) {
                     $op_c = mysqli_real_escape_string($conn,$Row[3]);
+                    
+
                 }
 
                 $op_d = "";
                 if(isset($Row[4])) {
                     $op_d = mysqli_real_escape_string($conn,$Row[4]);
+                    
+
                 }
 
                 $op_correct = "";

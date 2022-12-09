@@ -109,7 +109,7 @@ if(!isset($_SESSION["user_id"]))
                             <tr id = "added<?= $row["id"]; ?>" style="display:none;">
                               <input type="hidden" id="question_id" value="<?= $row["id"]; ?>">
                               <td><?= $i;?></td>
-                              <td><?= $row["title"];?></td>
+                              <td data-toggle="modal" data-target="#questionModal<?=$row["id"];?>"><?= $row["title"];?></td>
                               <td><?= $row["level"];?></td>
                               <td><button id="delete" name="delete" class="btn btn-primary btn-round" onclick="delete_question('<?= $row["id"]; ?>')">DELETE</button></td>
                             </tr>

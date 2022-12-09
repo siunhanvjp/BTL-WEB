@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_password = $password; // Creates a password hash
 
             if(mysqli_stmt_execute($stmt)){
-                header("location: login.php");
+                header("location: admin_dashboard.php");
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
